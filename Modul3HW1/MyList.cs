@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Modul3HW1
 {
     public class MyList<T>
+        where T : IComparable
     {
         private T[] _items;
 
@@ -106,17 +107,31 @@ namespace Modul3HW1
 
         public void Sort()
         {
-            Array.Sort(_items);
+            for (var write = 0; write < Count; write++)
+            {
+                for (var sort = 0; sort < Count - 1; sort++)
+                {
+                    if (_items[sort].CompareTo(_items[sort + 1]).Equals(1))
+                    {
+                        Swap(ref _items[sort], ref _items[sort + 1]);
+                    }
+                }
+            }
         }
 
         public void Reverse()
         {
             for (var i = 0; i < Count / 2; i++)
             {
-                var temp = _items[Count - i - 1];
-                _items[Count - i - 1] = _items[i];
-                _items[i] = temp;
+                Swap(ref _items[i], ref _items[Count - i - 1]);
             }
+        }
+
+        private void Swap(ref T x, ref T y)
+        {
+            var temp = x;
+            x = y;
+            y = temp;
         }
     }
 }

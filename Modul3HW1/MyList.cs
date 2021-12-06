@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,18 +34,69 @@ namespace Modul3HW1
 
         public void Add(T item)
         {
-            if (Count < Capacity)
+            if (Count.Equals(Capacity))
             {
-                _items[Count] = item;
-            }
-            else
-            {
-                var newCapacity = Capacity * 2;
-                var newItems = new T[newCapacity];
+                Capacity *= 2;
+                var newItems = new T[Capacity];
 
                 Array.Copy(_items, newItems, Count);
                 _items = newItems;
             }
+
+            _items[Count] = item;
+            Count++;
+        }
+
+        public void AddRange(IEnumerable<T> list)
+        {
+            foreach (var item in list)
+            {
+                Add(item);
+            }
+        }
+
+        public bool Remove(T item)
+        {
+            if (_items.Contains(item))
+            {
+                var index = -1;
+
+                for (var i = 0; i < Count; i++)
+                {
+                    if (_items[i].Equals(item))
+                    {
+                        index = i;
+                    }
+                }
+
+                return RemoveAt(index);
+            }
+
+            return false;
+        }
+
+        public bool RemoveAt(int index)
+        {
+            if (index < Count && index >= 0)
+            {
+                for (var i = index; i < Count - 1; i++)
+                {
+                    _items[i] = _items[i + 1];
+                }
+
+                Count--;
+                return true;
+            }
+
+            return false;
+        }
+
+        public void CutToCount()
+        {
+            var newItems = new T[Count];
+            Capacity = Count;
+            Array.Copy(_items, newItems, Count);
+            _items = newItems;
         }
     }
 }

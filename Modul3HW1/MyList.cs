@@ -77,6 +77,11 @@ namespace Modul3HW1
 
         public bool RemoveAt(int index)
         {
+            if (index < 0 || index >= Count)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             if (index < Count && index >= 0)
             {
                 for (var i = index; i < Count - 1; i++)
@@ -97,6 +102,21 @@ namespace Modul3HW1
             Capacity = Count;
             Array.Copy(_items, newItems, Count);
             _items = newItems;
+        }
+
+        public void Sort()
+        {
+            Array.Sort(_items);
+        }
+
+        public void Reverse()
+        {
+            for (var i = 0; i < Count / 2; i++)
+            {
+                var temp = _items[Count - i - 1];
+                _items[Count - i - 1] = _items[i];
+                _items[i] = temp;
+            }
         }
     }
 }

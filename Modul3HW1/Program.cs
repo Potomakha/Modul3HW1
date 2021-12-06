@@ -33,7 +33,8 @@ namespace Modul3HW1
                 Console.WriteLine(list[i].ToString());
             }
 
-            list.CutToCount();
+            list.Reverse();
+            list.Sort();
             var item = list[2];
             Console.WriteLine(list.ToString());
         }
